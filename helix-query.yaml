@@ -1,0 +1,41 @@
+version: 1
+
+indices:
+  blog:
+    include:
+      - /en-gb/schools/secondary/blog/**
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: attribute(el, "content")
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, "content")
+      date:
+        select: head > meta[name="publication-date"]
+        value: attribute(el, "content")
+      tags:
+        select: head > meta[name="article:tag"]
+        values: attribute(el, "content")
+      author:
+        select: head > meta[name="author"]
+        value: attribute(el, "content")
+    target: /query-index.json
+
+  all:
+    include:
+      - /en-gb/schools/secondary/**
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, "content")
+      path:
+        select: head > meta[property="og:url"]
+        value: attribute(el, "content")
+    target: /all-query-index.json

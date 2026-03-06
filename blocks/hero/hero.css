@@ -1,37 +1,215 @@
-.hero-container .hero-wrapper {
-  max-width: unset;
-  padding: 0;
-}
+/* ============================================
+   Pearson Secondary - Hero Block
+   ============================================ */
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--color-navy);
 }
 
-.hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero picture {
+/* Background image */
+.hero-bg {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  z-index: 0;
 }
 
-.hero img {
-  object-fit: cover;
+.hero-bg picture,
+.hero-bg img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-@media (width >= 900px) {
+/* Gradient overlay */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(26, 46, 68, 0.92) 0%,
+    rgba(26, 46, 68, 0.75) 50%,
+    rgba(26, 46, 68, 0.3) 100%
+  );
+}
+
+/* Content container */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--spacing-4xl) var(--container-padding);
+  width: 100%;
+}
+
+.hero-content-inner {
+  max-width: 600px;
+}
+
+/* Eyebrow */
+.hero-eyebrow {
+  display: inline-block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background-color: rgba(0, 127, 163, 0.15);
+  border: 1px solid rgba(0, 127, 163, 0.4);
+  padding: 0.35rem 0.875rem;
+  border-radius: var(--border-radius-full);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Headline */
+.hero-content h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  line-height: 1.15;
+  margin-bottom: var(--spacing-lg);
+}
+
+.hero-content h1 em {
+  font-style: normal;
+  color: var(--color-primary);
+}
+
+/* Description */
+.hero-description {
+  font-size: var(--font-size-md);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-2xl);
+  max-width: 520px;
+}
+
+.hero-description p {
+  color: inherit;
+  margin-bottom: 0;
+}
+
+/* CTA buttons */
+.hero-ctas {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.hero-ctas .button {
+  padding: 0.875rem 2rem;
+  font-size: var(--font-size-base);
+}
+
+/* Hero stats bar */
+.hero-stats {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hero-stats-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--container-padding);
+  display: flex;
+  gap: var(--spacing-3xl);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat-value {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  line-height: 1;
+  margin-bottom: var(--spacing-xs);
+}
+
+.hero-stat-label {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Variants */
+.hero.centered .hero-content-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero.centered .hero-ctas {
+  justify-content: center;
+}
+
+.hero.centered .hero-description {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Light variant */
+.hero.light {
+  background-color: var(--color-primary-lighter);
+}
+
+.hero.light .hero-bg::after {
+  background: linear-gradient(
+    105deg,
+    rgba(232, 244, 248, 0.95) 0%,
+    rgba(232, 244, 248, 0.8) 60%,
+    rgba(232, 244, 248, 0.2) 100%
+  );
+}
+
+.hero.light .hero-content h1 {
+  color: var(--color-navy);
+}
+
+.hero.light .hero-description {
+  color: var(--color-text);
+}
+
+.hero.light .hero-eyebrow {
+  background-color: rgba(0, 127, 163, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
   .hero {
-    padding: 40px 32px;
+    min-height: 400px;
+  }
+
+  .hero-content {
+    padding: var(--spacing-3xl) var(--container-padding);
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-ctas .button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .hero-stats-inner {
+    gap: var(--spacing-xl);
   }
 }

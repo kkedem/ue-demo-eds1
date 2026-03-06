@@ -1,0 +1,154 @@
+/* ============================================
+   Pearson Secondary - Subject Cards Block
+   Subject area navigation grid
+   ============================================ */
+
+.subject-cards {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Grid layout */
+.subject-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--spacing-md);
+}
+
+/* Individual subject card */
+.subject-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg) var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  text-decoration: none;
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  min-height: 100px;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    filter var(--transition-base);
+}
+
+.subject-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background var(--transition-fast);
+  z-index: 0;
+}
+
+.subject-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+  color: var(--color-white);
+}
+
+.subject-card:hover::before {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Subject icon */
+.subject-card-icon {
+  position: relative;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.subject-card-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+}
+
+.subject-card-icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+/* Subject name */
+.subject-card-name {
+  position: relative;
+  z-index: 1;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.3;
+}
+
+/* Subject color themes */
+.subject-card[data-subject="english"]   { background-color: var(--color-subject-english); }
+.subject-card[data-subject="maths"]     { background-color: var(--color-subject-maths); }
+.subject-card[data-subject="science"]   { background-color: var(--color-subject-science); }
+.subject-card[data-subject="history"]   { background-color: var(--color-subject-history); }
+.subject-card[data-subject="geography"] { background-color: var(--color-subject-geography); }
+.subject-card[data-subject="languages"] { background-color: var(--color-subject-languages); }
+.subject-card[data-subject="computing"] { background-color: var(--color-subject-computing); }
+.subject-card[data-subject="arts"]      { background-color: var(--color-subject-arts); }
+.subject-card[data-subject="pe"]        { background-color: var(--color-subject-pe); }
+.subject-card[data-subject="pshe"]      { background-color: var(--color-subject-pshe); }
+.subject-card[data-subject="business"]  { background-color: var(--color-subject-business); }
+.subject-card[data-subject="drama"]     { background-color: var(--color-subject-drama); }
+
+/* "View all" card */
+.subject-card.view-all {
+  background-color: transparent;
+  border: 2px solid var(--color-border);
+  color: var(--color-primary);
+}
+
+.subject-card.view-all:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-lighter);
+}
+
+.subject-card.view-all .subject-card-icon {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .subject-cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .subject-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+  }
+
+  .subject-card {
+    padding: var(--spacing-md) var(--spacing-sm);
+    min-height: 90px;
+  }
+}
+
+@media (max-width: 480px) {
+  .subject-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+}

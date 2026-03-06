@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  Pearson Secondary Schools - Sample AEM Content Page
+  ============================================================================
+  This HTML represents the content that AEM (Adobe Experience Manager as a
+  Cloud Service) would serve via the fstab.yaml mountpoint.
+
+  In the AEM + EDS Universal Editor architecture:
+  1. This content lives in AEM under:
+     /content/pearson-secondary/en-gb/schools/secondary
+
+  2. AEM renders it as HTML (via HTL/Sightly templates using the
+     franklin-core components: core/franklin/components/*)
+
+  3. EDS fetches it and applies JavaScript block decorators from /blocks/
+
+  4. Universal Editor instruments each block with data-aue-* attributes,
+     pointing back to the JCR nodes in AEM for inline editing.
+
+  Block markup convention:
+  - Blocks are identified by <div class="block-name">
+  - Each block variant is appended as extra class: "cards four-col"
+  - Rows: <div> children of the block div
+  - Cells: <div> children of each row
+  ============================================================================
+-->
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Page metadata (used by EDS for SEO + behaviour) -->
+  <meta name="template" content="landing">
+  <meta name="theme" content="pearson-secondary">
+  <meta name="description" content="Pearson supports secondary schools across the UK with curriculum resources, revision guides, qualifications, digital platforms and professional development for teachers.">
+  <meta name="keywords" content="secondary school resources, GCSE, A Level, ActiveLearn, Pearson Revise, secondary teaching, UK secondary education">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Secondary Schools | Pearson UK">
+  <meta property="og:description" content="Supporting every step of the secondary school journey - from curriculum resources to qualifications support.">
+  <meta property="og:image" content="/content/dam/pearson/secondary/hero-secondary-schools.jpg">
+  <meta property="og:url" content="https://www.pearson.com/en-gb/schools/secondary.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pearson UK">
+
+  <!-- Structured data -->
+  <meta name="publication-date" content="2024-06-13">
+  <meta name="author" content="Pearson Schools Team">
+
+  <!-- Universal Editor connection (injected at runtime in AEM) -->
+  <meta name="urn:adobe:aue:system:aemconnection" content="aem:https://author-p12345-e67890.adobeaemcloud.com">
+  <meta name="urn:adobe:aue:config:service" content="https://universal-editor-service.adobe.io">
+
+  <title>Secondary Schools | Pearson UK</title>
+
+  <!-- EDS loads CSS/JS via scripts.js - only these two are needed here -->
+  <link rel="stylesheet" href="/styles/styles.css">
+  <script type="module" src="/scripts/scripts.js"></script>
+</head>
+<body>
+  <!-- Header is auto-built by EDS from /blocks/header/ -->
+  <header></header>
+
+  <main
+    data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root"
+    data-aue-type="container"
+    data-aue-filter="main"
+    data-aue-label="Page Content">
+
+    <!-- ============================================================
+         SECTION 1: HERO
+         ============================================================ -->
+    <div class="section"
+         data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container0"
+         data-aue-type="container"
+         data-aue-filter="section">
+
+      <div class="hero"
+           data-block-name="hero"
+           data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container0/hero"
+           data-aue-type="component"
+           data-aue-label="Hero">
+
+        <!-- Row 0: Background image -->
+        <div>
+          <div>
+            <picture>
+              <source media="(min-width: 1200px)" srcset="/content/dam/pearson/secondary/hero-secondary-schools-2000.webp" type="image/webp">
+              <source media="(min-width: 768px)" srcset="/content/dam/pearson/secondary/hero-secondary-schools-1200.webp" type="image/webp">
+              <img src="/content/dam/pearson/secondary/hero-secondary-schools.jpg"
+                   alt="Secondary school students engaged in learning"
+                   width="2000" height="1000" loading="eager">
+            </picture>
+          </div>
+        </div>
+
+        <!-- Row 1: Eyebrow | Headline -->
+        <div>
+          <div>Secondary Schools</div>
+          <div>
+            <h1>Supporting every step of the <em>secondary school</em> journey</h1>
+          </div>
+        </div>
+
+        <!-- Row 2: Description -->
+        <div>
+          <div>
+            <p>From curriculum resources and revision guides to qualifications support and professional development, Pearson is your trusted partner for secondary education in the UK.</p>
+          </div>
+        </div>
+
+        <!-- Row 3: CTAs -->
+        <div>
+          <div>
+            <p><a href="/en-gb/schools/secondary/resources.html">Explore Resources</a></p>
+          </div>
+          <div>
+            <p><em><a href="/en-gb/contact-us.html">Contact Our Schools Team</a></em></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================================
+         SECTION 2: FEATURED SOLUTIONS (CARDS)
+         Section metadata applies the background-light class
+         ============================================================ -->
+    <div class="section background-light"
+         data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container1"
+         data-aue-type="container"
+         data-aue-filter="section">
+
+      <!-- Section heading (default content) -->
+      <div class="default-content-wrapper">
+        <h2>Our solutions for secondary schools</h2>
+        <p>Comprehensive tools and resources designed to support teachers, students, and school leaders at every stage.</p>
+      </div>
+
+      <!-- Cards block: four-col variant -->
+      <div class="cards four-col"
+           data-block-name="cards"
+           data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container1/cards"
+           data-aue-type="component"
+           data-aue-label="Solutions Cards">
+
+        <!-- Card 1: ActiveLearn -->
+        <div>
+          <div>
+            <picture>
+              <img src="/content/dam/pearson/secondary/activelearn-card.jpg" alt="ActiveLearn digital learning platform" width="800" height="450" loading="lazy">
+            </picture>
+          </div>
+          <div>
+            <p><strong>Digital Platform</strong></p>
+            <h3>ActiveLearn</h3>
+            <p>Our award-winning digital learning platform with interactive content, homework tools, and real-time progress tracking for Years 7–13.</p>
+            <p><a href="/en-gb/schools/products/activelearn.html">Explore ActiveLearn</a></p>
+          </div>
+        </div>
+
+        <!-- Card 2: Pearson Revise -->
+        <div>
+          <div>
+            <picture>
+              <img src="/content/dam/pearson/secondary/pearson-revise-card.jpg" alt="Pearson Revise revision guides" width="800" height="450" loading="lazy">
+            </picture>
+          </div>
+          <div>
+            <p><strong>Revision</strong></p>
+            <h3>Pearson Revise</h3>
+            <p>The UK's number one GCSE and A Level revision series. Structured revision guides, workbooks, and practice papers for every major subject.</p>
+            <p><a href="/en-gb/schools/products/revise.html">Discover Revise</a></p>
+          </div>
+        </div>
+
+        <!-- Card 3: Onscreen Assessment -->
+        <div>
+          <div>
+            <picture>
+              <img src="/content/dam/pearson/secondary/onscreen-assessment-card.jpg" alt="Onscreen Assessment tools" width="800" height="450" loading="lazy">
+            </picture>
+          </div>
+          <div>
+            <p><strong>Assessment</strong></p>
+            <h3>Onscreen Assessment</h3>
+            <p>Flexible digital assessment tools that enable schools to deliver secure, marked, and moderated online tests with detailed analytics.</p>
+            <p><a href="/en-gb/schools/digital-assessment.html">Learn About Assessment</a></p>
+          </div>
+        </div>
+
+        <!-- Card 4: International GCSE -->
+        <div>
+          <div>
+            <picture>
+              <img src="/content/dam/pearson/secondary/igcse-card.jpg" alt="Pearson Edexcel International GCSE" width="800" height="450" loading="lazy">
+            </picture>
+          </div>
+          <div>
+            <p><strong>Qualifications</strong></p>
+            <h3>International GCSE</h3>
+            <p>Pearson Edexcel International GCSEs — globally recognised qualifications for secondary students in the UK and worldwide.</p>
+            <p><a href="/en-gb/qualifications/igcse.html">View Qualifications</a></p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================
+         SECTION 3: SUBJECT AREAS
+         ============================================================ -->
+    <div class="section"
+         data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container2"
+         data-aue-type="container"
+         data-aue-filter="section">
+
+      <div class="default-content-wrapper">
+        <h2>Explore resources by subject</h2>
+        <p>Find curriculum-aligned textbooks, digital resources, and assessment materials for every secondary school subject.</p>
+      </div>
+
+      <div class="subject-cards"
+           data-block-name="subject-cards"
+           data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container2/subjects"
+           data-aue-type="component"
+           data-aue-label="Subject Cards">
+
+        <!-- Each row: subject name | link | optional color -->
+        <div><div>English</div><div><a href="/en-gb/schools/secondary/english.html">English</a></div></div>
+        <div><div>Maths</div><div><a href="/en-gb/schools/secondary/maths.html">Maths</a></div></div>
+        <div><div>Science</div><div><a href="/en-gb/schools/secondary/science.html">Science</a></div></div>
+        <div><div>History</div><div><a href="/en-gb/schools/secondary/history.html">History</a></div></div>
+        <div><div>Geography</div><div><a href="/en-gb/schools/secondary/geography.html">Geography</a></div></div>
+        <div><div>Languages</div><div><a href="/en-gb/schools/secondary/modern-languages.html">Languages</a></div></div>
+        <div><div>Computing</div><div><a href="/en-gb/schools/secondary/computing.html">Computing</a></div></div>
+        <div><div>Art &amp; Design</div><div><a href="/en-gb/schools/secondary/art-design.html">Art &amp; Design</a></div></div>
+        <div><div>Drama &amp; Music</div><div><a href="/en-gb/schools/secondary/drama-music.html">Drama &amp; Music</a></div></div>
+        <div><div>PE &amp; Sport</div><div><a href="/en-gb/schools/secondary/pe.html">PE &amp; Sport</a></div></div>
+        <div><div>PSHE</div><div><a href="/en-gb/schools/secondary/pshe.html">PSHE</a></div></div>
+        <div><div>Business</div><div><a href="/en-gb/schools/secondary/business.html">Business</a></div></div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================
+         SECTION 4: FEATURED PLATFORM (TEASER - ActiveLearn deep dive)
+         ============================================================ -->
+    <div class="section background-light-blue"
+         data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container3"
+         data-aue-type="container"
+         data-aue-filter="section">
+
+      <div class="teaser"
+           data-block-name="teaser"
+           data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container3/teaser0"
+           data-aue-type="component"
+           data-aue-label="ActiveLearn Feature">
+
+        <!-- Row 0: Image -->
+        <div>
+          <div>
+            <picture>
+              <img src="/content/dam/pearson/secondary/activelearn-feature.jpg"
+                   alt="Students using ActiveLearn digital platform on tablets"
+                   width="800" height="600" loading="lazy">
+            </picture>
+          </div>
+        </div>
+
+        <!-- Row 1: Eyebrow | Title -->
+        <div>
+          <div>Digital Learning</div>
+          <div>
+            <h2>Give students the tools to <strong>succeed</strong> with ActiveLearn</h2>
+          </div>
+        </div>
+
+        <!-- Row 2: Description -->
+        <div>
+          <div>
+            <p>ActiveLearn Secondary is a digital learning service for secondary schools, providing access to a wide range of Pearson resources, enabling teachers to set homework, track progress, and deliver personalised learning experiences.</p>
+            <ul>
+              <li>1,000+ interactive resources aligned to the curriculum</li>
+              <li>Real-time progress dashboards for teachers and parents</li>
+              <li>Works on any device — tablet, laptop, or desktop</li>
+              <li>Free trial available for all schools</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Row 3: CTA -->
+        <div>
+          <div>
+            <p><a href="/en-gb/schools/products/activelearn.html">Start Your Free Trial</a></p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================
+         SECTION 5: PD ACADEMY (TEASER - image right)
+         ============================================================ -->
+    <div class="section"
+         data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container4"
+         data-aue-type="container"
+         data-aue-filter="section">
+
+      <div class="teaser image-right"
+           data-block-name="teaser"
+           data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container4/teaser1"
+           data-aue-type="component"
+           data-aue-label="PD Academy Feature">
+
+        <!-- Row 0: Image -->
+        <div>
+          <div>
+            <picture>
+              <img src="/content/dam/pearson/secondary/pd-academy-feature.jpg"
+                   alt="Teacher in professional development session"
+                   width="800" height="600" loading="lazy">
+            </picture>
+          </div>
+        </div>
+
+        <!-- Row 1: Eyebrow | Title -->
+        <div>
+          <div>Professional Development</div>
+          <div>
+            <h2>Invest in your teachers with <strong>Pearson PD Academy</strong></h2>
+          </div>
+        </div>
+
+        <!-- Row 2: Description -->
+        <div>
+          <div>
+            <p>Our professional development programmes are designed by expert practitioners to help secondary school teachers develop their skills, improve outcomes, and stay up to date with the latest pedagogical approaches.</p>
+            <ul>
+              <li>Subject-specific CPD programmes</li>
+              <li>Online, face-to-face, and blended learning options</li>
+              <li>Nationally recognised qualifications</li>
+              <li>Bespoke in-school training available</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Row 3: CTA -->
+        <div>
+          <div>
+            <p><a href="/en-gb/schools/pd-academy.html">Explore PD Academy</a></p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================
+         SECTION 6: LATEST RESOURCES (CARDS - blog/articles)
+         ============================================================ -->
+    <div class="section background-light"
+         data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container5"
+         data-aue-type="container"
+         data-aue-filter="section">
+
+      <div class="default-content-wrapper">
+        <h2>Latest from Pearson Schools</h2>
+        <p>Insights, research, and practical advice for secondary school educators.</p>
+      </div>
+
+      <div class="cards"
+           data-block-name="cards"
+           data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container5/blog-cards"
+           data-aue-type="component"
+           data-aue-label="Blog Cards">
+
+        <!-- Article Card 1 -->
+        <div>
+          <div>
+            <picture>
+              <img src="/content/dam/pearson/secondary/blog/ai-in-education.jpg" alt="AI in secondary education" width="800" height="450" loading="lazy">
+            </picture>
+          </div>
+          <div>
+            <p><strong>Teaching &amp; Learning</strong></p>
+            <h3>How AI is transforming secondary school classrooms in 2025</h3>
+            <p>Explore the practical ways artificial intelligence is being used by secondary school teachers to personalise learning and reduce marking time.</p>
+            <p><a href="/en-gb/schools/blog/ai-in-secondary-education.html">Read Article</a></p>
+          </div>
+        </div>
+
+        <!-- Article Card 2 -->
+        <div>
+          <div>
+            <picture>
+              <img src="/content/dam/pearson/secondary/blog/gcse-results-2024.jpg" alt="GCSE results analysis" width="800" height="450" loading="lazy">
+            </picture>
+          </div>
+          <div>
+            <p><strong>Qualifications</strong></p>
+            <h3>Understanding the 2024 GCSE results and what they mean for schools</h3>
+            <p>An analysis of the 2024 GCSE results, key trends, and implications for secondary school strategy going into the new academic year.</p>
+            <p><a href="/en-gb/schools/blog/gcse-results-2024.html">Read Article</a></p>
+          </div>
+        </div>
+
+        <!-- Article Card 3 -->
+        <div>
+          <div>
+            <picture>
+              <img src="/content/dam/pearson/secondary/blog/oracy-in-secondary.jpg" alt="Oracy skills in secondary schools" width="800" height="450" loading="lazy">
+            </picture>
+          </div>
+          <div>
+            <p><strong>Curriculum</strong></p>
+            <h3>Why oracy skills matter more than ever in secondary education</h3>
+            <p>Research shows that developing oracy — speaking and listening skills — significantly improves academic attainment and student confidence across all subjects.</p>
+            <p><a href="/en-gb/schools/blog/oracy-secondary-schools.html">Read Article</a></p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================
+         SECTION 7: QUALIFICATIONS STRIP (COLUMNS)
+         ============================================================ -->
+    <div class="section"
+         data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container6"
+         data-aue-type="container"
+         data-aue-filter="section">
+
+      <div class="default-content-wrapper">
+        <h2>Qualifications we support</h2>
+        <p>From GCSE to A Level, Pearson Edexcel qualifications are trusted by schools and recognised by universities and employers worldwide.</p>
+      </div>
+
+      <div class="columns four-col"
+           data-block-name="columns"
+           data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container6/quals"
+           data-aue-type="component"
+           data-aue-label="Qualifications Columns">
+
+        <div>
+          <div>
+            <h3>GCSE</h3>
+            <p>Our Pearson Edexcel GCSEs are taken by hundreds of thousands of students each year across England. Available in 30+ subjects.</p>
+            <p><a href="/en-gb/qualifications/gcse.html">View GCSE subjects</a></p>
+          </div>
+          <div>
+            <h3>A Level</h3>
+            <p>Pearson Edexcel A Levels are widely respected by universities. Available in 40+ subjects with comprehensive teacher support.</p>
+            <p><a href="/en-gb/qualifications/a-level.html">View A Level subjects</a></p>
+          </div>
+          <div>
+            <h3>International GCSE</h3>
+            <p>The Pearson Edexcel International GCSE is taken by students in over 90 countries and provides excellent preparation for A Levels.</p>
+            <p><a href="/en-gb/qualifications/igcse.html">View IGCSE</a></p>
+          </div>
+          <div>
+            <h3>BTEC</h3>
+            <p>BTEC qualifications are the most widely taken vocational qualifications in the UK, with a broad range of subjects for 14–19 year olds.</p>
+            <p><a href="/en-gb/qualifications/btec.html">View BTEC</a></p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================
+         SECTION 8: PROMO BANNER - CTA
+         ============================================================ -->
+    <div class="section"
+         style="padding: 0;"
+         data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container7"
+         data-aue-type="container"
+         data-aue-filter="section">
+
+      <div class="promo-banner centered"
+           data-block-name="promo-banner"
+           data-aue-resource="urn:aemconnection:/content/pearson-secondary/en-gb/schools/secondary/jcr:content/root/container7/promo"
+           data-aue-type="component"
+           data-aue-label="Contact CTA Banner">
+
+        <!-- Row 0: Eyebrow | Title -->
+        <div>
+          <div>Get in touch</div>
+          <div><h2>Let's talk about how we can support your school</h2></div>
+        </div>
+
+        <!-- Row 1: Description -->
+        <div>
+          <div>
+            <p>Our dedicated schools team is ready to help you find the right resources, platforms, and qualifications for your students. Book a free consultation today.</p>
+          </div>
+        </div>
+
+        <!-- Row 2: CTAs -->
+        <div>
+          <div>
+            <p><a href="/en-gb/contact-us.html">Contact Our Team</a></p>
+          </div>
+          <div>
+            <p><em><a href="/en-gb/schools/secondary/free-samples.html">Request Free Samples</a></em></p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer is auto-built by EDS from /blocks/footer/ -->
+  <footer></footer>
+
+</body>
+</html>

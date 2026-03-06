@@ -1,0 +1,164 @@
+/* ============================================
+   Pearson Secondary - Teaser Block
+   Featured content with image + text
+   ============================================ */
+
+.teaser {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.teaser-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background-color: var(--color-white);
+}
+
+/* Image column */
+.teaser-image {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.teaser-image picture,
+.teaser-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+
+.teaser:hover .teaser-image img {
+  transform: scale(1.03);
+}
+
+/* Content column */
+.teaser-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--spacing-3xl) var(--spacing-2xl);
+  gap: var(--spacing-md);
+}
+
+.teaser-eyebrow {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.teaser-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-navy);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.teaser-description {
+  color: var(--color-text-muted);
+  line-height: var(--line-height-relaxed);
+  margin: 0;
+}
+
+.teaser-description p {
+  color: inherit;
+  margin: 0;
+}
+
+.teaser-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: var(--font-size-base);
+  transition: gap var(--transition-fast), color var(--transition-fast);
+}
+
+.teaser-cta:hover {
+  gap: var(--spacing-md);
+  color: var(--color-primary-dark);
+  text-decoration: none;
+}
+
+.teaser-cta svg {
+  flex-shrink: 0;
+}
+
+/* Image on right variant */
+.teaser.image-right .teaser-inner {
+  direction: rtl;
+}
+
+.teaser.image-right .teaser-inner > * {
+  direction: ltr;
+}
+
+/* Dark variant */
+.teaser.dark .teaser-inner {
+  background-color: var(--color-navy);
+}
+
+.teaser.dark .teaser-content {
+  background-color: var(--color-navy);
+}
+
+.teaser.dark .teaser-title {
+  color: var(--color-white);
+}
+
+.teaser.dark .teaser-description {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.teaser.dark .teaser-cta {
+  color: var(--color-primary);
+}
+
+/* Compact variant */
+.teaser.compact .teaser-inner {
+  grid-template-columns: 2fr 3fr;
+}
+
+.teaser.compact .teaser-image {
+  min-height: 280px;
+}
+
+.teaser.compact .teaser-content {
+  padding: var(--spacing-2xl);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .teaser-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .teaser-image {
+    min-height: 260px;
+  }
+
+  .teaser.image-right .teaser-inner {
+    direction: ltr;
+  }
+
+  .teaser.compact .teaser-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .teaser-content {
+    padding: var(--spacing-xl);
+  }
+}

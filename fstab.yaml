@@ -1,0 +1,4 @@
+mountpoints:
+  /:
+    url: https://author-p12345-e67890.adobeaemcloud.com/content/pearson-secondary
+    type: markup

@@ -1,33 +1,138 @@
-.columns > div {
-  display: flex;
-  flex-direction: column;
+/* ============================================
+   Pearson Secondary - Columns Block
+   Flexible column layout for content sections
+   ============================================ */
+
+.columns {
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 
-.columns img {
+.columns-wrapper {
+  display: grid;
+  gap: var(--spacing-2xl);
+  align-items: center;
+}
+
+/* Default: 2-column equal */
+.columns .columns-wrapper {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* 3-column equal */
+.columns.three-col .columns-wrapper {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* 60/40 split */
+.columns.sixty-forty .columns-wrapper {
+  grid-template-columns: 3fr 2fr;
+}
+
+/* 40/60 split */
+.columns.forty-sixty .columns-wrapper {
+  grid-template-columns: 2fr 3fr;
+}
+
+/* Column content */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.column img,
+.column picture {
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
   width: 100%;
 }
 
-.columns > div > div {
-  order: 1;
+.column picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.columns > div > .columns-img-col {
-  order: 0;
+.column h2,
+.column h3 {
+  font-size: var(--font-size-2xl);
+  color: var(--color-navy);
+  margin: 0;
 }
 
-.columns > div > .columns-img-col img {
+.column p {
+  color: var(--color-text-muted);
+  line-height: var(--line-height-relaxed);
+  margin: 0;
+}
+
+.column .eyebrow {
+  display: inline-block;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Icon list within a column */
+.column ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.column ul li {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+}
+
+.column ul li::before {
+  content: '';
   display: block;
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+  margin-top: 2px;
 }
 
-@media (width >= 900px) {
-  .columns > div {
-    align-items: center;
-    flex-direction: unset;
-    gap: 24px;
+/* Image with rounded corners and aspect ratio */
+.columns.image-right .column:last-child picture,
+.columns.image-left .column:first-child picture {
+  aspect-ratio: 4 / 3;
+}
+
+.columns.image-right .column:last-child img,
+.columns.image-left .column:first-child img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .columns .columns-wrapper,
+  .columns.three-col .columns-wrapper,
+  .columns.sixty-forty .columns-wrapper,
+  .columns.forty-sixty .columns-wrapper {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
   }
 
-  .columns > div > div {
-    flex: 1;
-    order: unset;
+  /* Reorder on mobile: content before image */
+  .columns.image-right .columns-wrapper {
+    direction: ltr;
   }
 }

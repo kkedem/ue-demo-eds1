@@ -1,171 +1,256 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
+/**
+ * Pearson Secondary Schools - Header Block
+ * Builds the site header with navigation, including mobile responsiveness.
+ * Content can be driven by AEM navigation content fragment.
+ */
 
-// media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
-
-function closeOnEscape(e) {
-  if (e.code === 'Escape') {
-    const nav = document.getElementById('nav');
-    const navSections = nav.querySelector('.nav-sections');
-    if (!navSections) return;
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections);
-      navSectionExpanded.focus();
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections);
-      nav.querySelector('button').focus();
-    }
-  }
-}
-
-function closeOnFocusLost(e) {
-  const nav = e.currentTarget;
-  if (!nav.contains(e.relatedTarget)) {
-    const navSections = nav.querySelector('.nav-sections');
-    if (!navSections) return;
-    const navSectionExpanded = navSections.querySelector('[aria-expanded="true"]');
-    if (navSectionExpanded && isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleAllNavSections(navSections, false);
-    } else if (!isDesktop.matches) {
-      // eslint-disable-next-line no-use-before-define
-      toggleMenu(nav, navSections, false);
-    }
-  }
-}
-
-function openOnKeydown(e) {
-  const focused = document.activeElement;
-  const isNavDrop = focused.className === 'nav-drop';
-  if (isNavDrop && (e.code === 'Enter' || e.code === 'Space')) {
-    const dropExpanded = focused.getAttribute('aria-expanded') === 'true';
-    // eslint-disable-next-line no-use-before-define
-    toggleAllNavSections(focused.closest('.nav-sections'));
-    focused.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
-  }
-}
-
-function focusNavSection() {
-  document.activeElement.addEventListener('keydown', openOnKeydown);
+/**
+ * Creates the Pearson logo SVG.
+ * @returns {string} SVG markup
+ */
+function getPearsonLogoSVG() {
+  return `<svg class="header-brand-logo" viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Pearson">
+    <rect width="130" height="36" rx="4" fill="#007FA3"/>
+    <text x="10" y="24" font-family="Open Sans, Arial, sans-serif" font-size="16" font-weight="700" fill="white">Pearson</text>
+  </svg>`;
 }
 
 /**
- * Toggles all nav sections
- * @param {Element} sections The container element
- * @param {Boolean} expanded Whether the element should be expanded or collapsed
+ * Navigation data structure.
+ * In production this would be fetched from AEM navigation content fragment.
  */
-function toggleAllNavSections(sections, expanded = false) {
-  if (!sections) return;
-  sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
-    section.setAttribute('aria-expanded', expanded);
+const navData = [
+  {
+    label: 'For School',
+    id: 'for-school',
+    active: true,
+    children: [
+      { group: 'Educators', items: [] },
+      { label: 'Primary Schools', href: '/en-gb/schools/primary.html' },
+      { label: 'Secondary Schools', href: '/en-gb/schools/secondary.html' },
+      { label: 'Independent Schools', href: '/en-gb/schools/independent.html' },
+      { group: 'Resources', items: [] },
+      { label: 'ActiveLearn', href: '/en-gb/schools/products/activelearn.html' },
+      { label: 'Pearson Revise', href: '/en-gb/schools/products/revise.html' },
+      { label: 'Onscreen Assessment', href: '/en-gb/schools/digital-assessment.html' },
+      { label: 'Support & Resources', href: '/en-gb/schools/support.html' },
+    ],
+  },
+  {
+    label: 'For College',
+    id: 'for-college',
+    children: [
+      { label: 'BTEC Qualifications', href: '/en-gb/colleges/btec.html' },
+      { label: 'T Levels', href: '/en-gb/colleges/t-levels.html' },
+      { label: 'Functional Skills', href: '/en-gb/colleges/functional-skills.html' },
+    ],
+  },
+  {
+    label: 'For University',
+    id: 'for-university',
+    children: [
+      { label: 'Higher Education', href: '/en-gb/higher-education.html' },
+      { label: 'MyLab & Mastering', href: '/en-gb/higher-education/mylab.html' },
+    ],
+  },
+  {
+    label: 'Qualifications',
+    id: 'qualifications',
+    children: [
+      { label: 'GCSE', href: '/en-gb/qualifications/gcse.html' },
+      { label: 'A Level', href: '/en-gb/qualifications/a-level.html' },
+      { label: 'International GCSE', href: '/en-gb/qualifications/igcse.html' },
+      { label: 'BTEC', href: '/en-gb/qualifications/btec.html' },
+    ],
+  },
+  {
+    label: 'Explore Pearson',
+    id: 'explore',
+    children: [
+      { label: 'About Pearson', href: '/en-gb/about-us.html' },
+      { label: 'News & Blog', href: '/en-gb/news.html' },
+      { label: 'Careers', href: '/en-gb/careers.html' },
+      { label: 'Contact Us', href: '/en-gb/contact-us.html' },
+    ],
+  },
+];
+
+/**
+ * Builds a dropdown menu for a nav item.
+ * @param {Object} navItem - Nav item with children
+ * @returns {HTMLElement}
+ */
+function buildDropdown(navItem) {
+  const dropdown = document.createElement('div');
+  dropdown.className = 'header-dropdown';
+  dropdown.setAttribute('role', 'menu');
+
+  let currentGroup = null;
+
+  navItem.children.forEach((child) => {
+    if (child.group) {
+      const groupTitle = document.createElement('div');
+      groupTitle.className = 'header-dropdown-title';
+      groupTitle.textContent = child.group;
+      dropdown.appendChild(groupTitle);
+      return;
+    }
+
+    const link = document.createElement('a');
+    link.href = child.href;
+    link.textContent = child.label;
+    link.setAttribute('role', 'menuitem');
+    dropdown.appendChild(link);
   });
+
+  return dropdown;
 }
 
 /**
- * Toggles the entire nav
- * @param {Element} nav The container element
- * @param {Element} navSections The nav sections within the container element
- * @param {*} forceExpanded Optional param to force nav expand behavior when not null
+ * Builds the primary navigation list.
+ * @returns {HTMLElement}
  */
-function toggleMenu(nav, navSections, forceExpanded = null) {
-  const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
-  const button = nav.querySelector('.nav-hamburger button');
-  document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
-  nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
-  button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
-  // enable nav dropdown keyboard accessibility
-  if (navSections) {
-    const navDrops = navSections.querySelectorAll('.nav-drop');
-    if (isDesktop.matches) {
-      navDrops.forEach((drop) => {
-        if (!drop.hasAttribute('tabindex')) {
-          drop.setAttribute('tabindex', 0);
-          drop.addEventListener('focus', focusNavSection);
-        }
+function buildPrimaryNav() {
+  const nav = document.createElement('ul');
+  nav.className = 'header-nav-primary';
+  nav.setAttribute('role', 'menubar');
+
+  navData.forEach((item) => {
+    const li = document.createElement('li');
+    li.setAttribute('role', 'none');
+    if (item.active) li.classList.add('active');
+
+    const trigger = document.createElement('button');
+    trigger.setAttribute('aria-haspopup', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.setAttribute('aria-label', `${item.label} menu`);
+    trigger.innerHTML = `
+      ${item.label}
+      <svg class="header-nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    `;
+
+    const dropdown = buildDropdown(item);
+    li.appendChild(trigger);
+    li.appendChild(dropdown);
+
+    trigger.addEventListener('click', () => {
+      const isOpen = li.classList.contains('open');
+      // Close all others
+      nav.querySelectorAll('li.open').forEach((el) => {
+        el.classList.remove('open');
+        el.querySelector('button')?.setAttribute('aria-expanded', 'false');
       });
-    } else {
-      navDrops.forEach((drop) => {
-        drop.removeAttribute('tabindex');
-        drop.removeEventListener('focus', focusNavSection);
+      if (!isOpen) {
+        li.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    nav.appendChild(li);
+  });
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', (e) => {
+    if (!nav.contains(e.target)) {
+      nav.querySelectorAll('li.open').forEach((el) => {
+        el.classList.remove('open');
+        el.querySelector('button')?.setAttribute('aria-expanded', 'false');
       });
     }
-  }
+  });
 
-  // enable menu collapse on escape keypress
-  if (!expanded || isDesktop.matches) {
-    // collapse menu on escape press
-    window.addEventListener('keydown', closeOnEscape);
-    // collapse menu on focus lost
-    nav.addEventListener('focusout', closeOnFocusLost);
-  } else {
-    window.removeEventListener('keydown', closeOnEscape);
-    nav.removeEventListener('focusout', closeOnFocusLost);
-  }
+  return nav;
 }
 
 /**
- * loads and decorates the header, mainly the nav
- * @param {Element} block The header block element
+ * Main header block decorator.
+ * @param {HTMLElement} block - The header block element
  */
 export default async function decorate(block) {
-  // load nav as fragment
-  const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await loadFragment(navPath);
+  block.closest('.header-wrapper')?.removeAttribute('style');
 
-  // decorate nav DOM
-  block.textContent = '';
-  const nav = document.createElement('nav');
-  nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+  // Build utility bar
+  const utilityBar = document.createElement('div');
+  utilityBar.className = 'header-utility-bar';
+  utilityBar.innerHTML = `
+    <a href="/en-gb/support.html">Support</a>
+    <a href="/en-gb/contact-us.html">Contact Us</a>
+    <a href="/en-gb/sign-in.html">Sign In</a>
+    <div class="header-country-selector" aria-label="Select country">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="2" y1="12" x2="22" y2="12"></line>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+      </svg>
+      United Kingdom
+    </div>
+  `;
 
-  const classes = ['brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
-    const section = nav.children[i];
-    if (section) section.classList.add(`nav-${c}`);
+  // Build main nav bar
+  const navBar = document.createElement('nav');
+  navBar.className = 'header-nav';
+  navBar.setAttribute('aria-label', 'Main navigation');
+
+  // Brand / Logo
+  const brand = document.createElement('a');
+  brand.href = '/en-gb/';
+  brand.className = 'header-brand';
+  brand.setAttribute('aria-label', 'Pearson Home');
+  brand.innerHTML = getPearsonLogoSVG();
+
+  // Hamburger button
+  const hamburger = document.createElement('button');
+  hamburger.className = 'header-hamburger';
+  hamburger.setAttribute('aria-label', 'Toggle navigation menu');
+  hamburger.setAttribute('aria-expanded', 'false');
+  hamburger.innerHTML = `
+    <span></span>
+    <span></span>
+    <span></span>
+  `;
+
+  // Primary nav
+  const primaryNav = buildPrimaryNav();
+
+  // Header actions
+  const actions = document.createElement('div');
+  actions.className = 'header-actions';
+  actions.innerHTML = `
+    <button class="header-search-btn" aria-label="Search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+    <a href="/en-gb/shop/cart.html" class="header-cart-btn" aria-label="Shopping cart" style="position:relative; text-decoration:none;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+    </a>
+  `;
+
+  navBar.appendChild(brand);
+  navBar.appendChild(primaryNav);
+  navBar.appendChild(hamburger);
+  navBar.appendChild(actions);
+
+  // Hamburger toggle
+  hamburger.addEventListener('click', () => {
+    const isOpen = primaryNav.classList.toggle('is-open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
-  const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
-  if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
-  }
+  // Assemble header
+  block.innerHTML = '';
+  block.appendChild(utilityBar);
+  block.appendChild(navBar);
 
-  const navSections = nav.querySelector('.nav-sections');
-  if (navSections) {
-    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
-        if (isDesktop.matches) {
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        }
-      });
-    });
-  }
-
-  // hamburger for mobile
-  const hamburger = document.createElement('div');
-  hamburger.classList.add('nav-hamburger');
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-      <span class="nav-hamburger-icon"></span>
-    </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(hamburger);
-  nav.setAttribute('aria-expanded', 'false');
-  // prevent mobile nav behavior on window resize
-  toggleMenu(nav, navSections, isDesktop.matches);
-  isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
-
-  const navWrapper = document.createElement('div');
-  navWrapper.className = 'nav-wrapper';
-  navWrapper.append(nav);
-  block.append(navWrapper);
+  // Wrap in semantic header if not already
+  const header = block.closest('header') || block;
+  header.className = 'header-wrapper';
 }

@@ -122,7 +122,7 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .columns .columns-wrapper,
   .columns.three-col .columns-wrapper,
   .columns.sixty-forty .columns-wrapper,

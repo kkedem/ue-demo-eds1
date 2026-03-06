@@ -120,7 +120,7 @@
 }
 
 .teaser.dark .teaser-description {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgb(255 255 255 / 75%);
 }
 
 .teaser.dark .teaser-cta {
@@ -141,7 +141,7 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .teaser-inner {
     grid-template-columns: 1fr;
   }

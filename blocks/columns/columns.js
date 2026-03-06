@@ -39,7 +39,9 @@ export default function decorate(block) {
           { media: '(min-width: 600px)', width: '800' },
           { width: '600' },
         ]);
-        img.closest('picture')?.replaceWith(optimized) || img.replaceWith(optimized);
+        const picture = img.closest('picture');
+        if (picture) picture.replaceWith(optimized);
+        else img.replaceWith(optimized);
       });
 
       column.append(...col.childNodes);

@@ -20,7 +20,9 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default function decorate(block) {
   const rows = [...block.querySelectorAll(':scope > div')];
-  const data = { image: null, eyebrow: '', title: '', description: '', ctaText: '', ctaHref: '' };
+  const data = {
+    image: null, eyebrow: '', title: '', description: '', ctaText: '', ctaHref: '',
+  };
 
   rows.forEach((row, i) => {
     const cols = [...row.querySelectorAll(':scope > div')];

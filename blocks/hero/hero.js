@@ -61,12 +61,12 @@ function extractHeroData(block) {
       }
     } else if (i === 2) {
       // Row 2: description
-      data.description = cols[0];
+      [data.description] = cols;
     } else if (i === 3) {
       // Row 3: CTA links
-      const links = row.querySelectorAll('a');
-      if (links[0]) data.primaryCTA = links[0];
-      if (links[1]) data.secondaryCTA = links[1];
+      const [primaryLink, secondaryLink] = [...row.querySelectorAll('a')];
+      if (primaryLink) data.primaryCTA = primaryLink;
+      if (secondaryLink) data.secondaryCTA = secondaryLink;
     }
   });
 

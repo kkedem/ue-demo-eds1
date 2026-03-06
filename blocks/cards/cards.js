@@ -60,7 +60,7 @@ function createCard(row, index) {
       imgWrapper.appendChild(optimized);
     } else {
       // Placeholder gradient background
-      imgWrapper.style.background = `linear-gradient(135deg, var(--color-primary) 0%, var(--color-navy) 100%)`;
+      imgWrapper.style.background = 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-navy) 100%)';
     }
 
     // Extract and render tag if present

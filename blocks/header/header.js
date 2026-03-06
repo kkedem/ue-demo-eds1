@@ -85,8 +85,6 @@ function buildDropdown(navItem) {
   dropdown.className = 'header-dropdown';
   dropdown.setAttribute('role', 'menu');
 
-  let currentGroup = null;
-
   navItem.children.forEach((child) => {
     if (child.group) {
       const groupTitle = document.createElement('div');

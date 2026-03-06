@@ -161,7 +161,9 @@ function parseSubjectsFromBlock(block) {
     const color = cols[2]?.textContent?.trim() || '';
     const slug = name.toLowerCase().replace(/[^a-z0-9]/g, '-');
 
-    return { name, href: link, color, slug, icon: 'grid' };
+    return {
+      name, href: link, color, slug, icon: 'grid',
+    };
   }).filter((s) => s.name);
 }
 

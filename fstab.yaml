@@ -1,4 +1,4 @@
 mountpoints:
   /:
-    url: https://author-p12345-e67890.adobeaemcloud.com/content/pearson-secondary
+    url: https://author-p9507-e143120.adobeaemcloud.com/content/pearson-secondary
     type: markup
